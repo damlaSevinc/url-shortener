@@ -1,5 +1,6 @@
 package com.example.url_shortener;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.apache.commons.validator.routines.UrlValidator;
@@ -12,26 +13,35 @@ import org.springframework.web.server.ResponseStatusException;
 public class UrlService {
 
     private final StringRedisTemplate redisTemplate;
+    private final UrlRepository urlRepository;
 
-    public UrlService(StringRedisTemplate redisTemplate){
+    public UrlService(StringRedisTemplate redisTemplate, UrlRepository urlRepository){
         this.redisTemplate = redisTemplate;
+        this.urlRepository = urlRepository;
     }
 
-    public String shortenLongUrl(String originalUrl){
+    public Url shortenLongUrl(String originalUrl){
         if(!isValidUrl(originalUrl)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid URL format");
         }
-        String hash = generateShortHash(originalUrl);
-        redisTemplate.opsForValue().set(hash, originalUrl);
-        return hash;
+        Optional<Url> existingUrl = urlRepository.findByOriginalUrl(originalUrl);
+        if(existingUrl.isPresent()){
+            return existingUrl.get();
+        }
+        String shortUrl = generateShortHash(originalUrl);
+        redisTemplate.opsForValue().set(shortUrl, originalUrl);
+        Url url = new Url(originalUrl, shortUrl);
+        urlRepository.save(url);
+        return url;
     }
 
-    public String getOriginalUrl(String shortUrl){
+    public Url getOriginalUrl(String shortUrl){
         String originalUrl = redisTemplate.opsForValue().get(shortUrl);
         if(originalUrl == null){
-            throw new IllegalArgumentException("URL not found");
+            urlRepository.findByShortUrl(shortUrl)
+                .orElseThrow(() -> new IllegalArgumentException("Short URl not found"));
         }
-        return originalUrl;
+        return new Url(originalUrl, shortUrl);
     }
 
     public boolean isValidUrl(String url){

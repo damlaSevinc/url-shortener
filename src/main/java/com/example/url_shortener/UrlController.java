@@ -20,16 +20,20 @@ public class UrlController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public String shortenUrl(@RequestBody String originalUrl) {
-        String shortUrl = urlService.shortenLongUrl(originalUrl);
-        return shortUrl;
+    public UrlResponseDto shortenUrl(@RequestBody UrlRequestDto urlRequestDto) {
+        Url url = urlService.shortenLongUrl(urlRequestDto.getOriginalUrl());
+        UrlResponseDto urlResponseDto = new UrlResponseDto();
+        urlResponseDto.setShortUrl(url.getShortUrl());
+        return urlResponseDto;
     }
 
     @GetMapping("/{shortUrl}")
     @ResponseStatus(HttpStatus.MOVED_PERMANENTLY)
-    public String resolveUrl(@PathVariable String shortUrl) {
-        String originalUrl = urlService.getOriginalUrl(shortUrl);
-        return originalUrl;
+    public UrlResponseDto resolveUrl(@PathVariable String shortUrl) {
+        Url originalUrl = urlService.getOriginalUrl(shortUrl);
+        UrlResponseDto urlResponseDto = new UrlResponseDto();
+        urlResponseDto.setOriginalUrl(originalUrl.getOriginalUrl());
+        return urlResponseDto;
     }
 
 

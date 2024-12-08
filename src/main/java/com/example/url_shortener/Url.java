@@ -1,5 +1,6 @@
 package com.example.url_shortener;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,6 +18,14 @@ public class Url {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String originalUrl;
+
+    @Column(nullable = false, unique = true)
     private String shortUrl;
+
+    public Url(String originalUrl, String shortUrl) {
+        this.originalUrl = originalUrl;
+        this.shortUrl = shortUrl;
+    }
 }
