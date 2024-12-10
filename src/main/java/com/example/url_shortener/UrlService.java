@@ -9,16 +9,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class UrlService {
 
     private final StringRedisTemplate redisTemplate;
     private final UrlRepository urlRepository;
-
-    public UrlService(StringRedisTemplate redisTemplate, UrlRepository urlRepository){
-        this.redisTemplate = redisTemplate;
-        this.urlRepository = urlRepository;
-    }
 
     public Url shortenLongUrl(String originalUrl){
         if(!isValidUrl(originalUrl)) {
@@ -38,8 +36,11 @@ public class UrlService {
     public Url getOriginalUrl(String shortUrl){
         String originalUrl = redisTemplate.opsForValue().get(shortUrl);
         if(originalUrl == null){
-            urlRepository.findByShortUrl(shortUrl)
-                .orElseThrow(() -> new IllegalArgumentException("Short URl not found"));
+            Url url = urlRepository.findByShortUrl(shortUrl).orElse(null);
+            if(url == null){
+                return null;
+            }
+            originalUrl = url.getOriginalUrl();
         }
         return new Url(originalUrl, shortUrl);
     }
