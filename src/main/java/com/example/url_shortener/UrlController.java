@@ -31,7 +31,7 @@ public class UrlController {
     }
 
     @GetMapping("/{shortUrl}")
-    @ResponseStatus(HttpStatus.MOVED_PERMANENTLY)
+    @ResponseStatus(HttpStatus.OK)
     public UrlResponseDto resolveUrl(@PathVariable String shortUrl) {
         Url originalUrl = urlService.getOriginalUrl(shortUrl);
         if(originalUrl == null) {

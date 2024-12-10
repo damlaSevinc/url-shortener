@@ -50,7 +50,7 @@ public class UrlControllerTest {
 
         this.mockMvc.perform(get("/api/urls/{shortUrl}", shortUrl))
             .andExpectAll(
-                status().isMovedPermanently(),
+                status().isOk(),
                 content().contentType(MediaType.APPLICATION_JSON),
                 jsonPath("$.originalUrl").value(originalUrl.getOriginalUrl())
             );

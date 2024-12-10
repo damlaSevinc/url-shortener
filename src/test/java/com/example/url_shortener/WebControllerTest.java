@@ -46,6 +46,6 @@ public class WebControllerTest {
         when(urlService.getOriginalUrl(shortUrl)).thenReturn(url);
 
         mockMvc.perform(get("/api/urls/{shortUrl}", shortUrl))
-            .andExpect(status().isMovedPermanently());
+            .andExpect(status().isOk());
     }
 }
