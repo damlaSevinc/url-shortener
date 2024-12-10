@@ -12,6 +12,11 @@ import org.springframework.http.MediaType;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import static org.mockito.Mockito.when;
+
+import com.example.url_shortener.Controllers.UrlController;
+import com.example.url_shortener.DTOs.UrlRequestDto;
+import com.example.url_shortener.Entities.Url;
+import com.example.url_shortener.Services.UrlService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebMvcTest(UrlController.class)

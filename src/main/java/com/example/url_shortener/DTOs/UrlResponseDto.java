@@ -1,4 +1,4 @@
-package com.example.url_shortener;
+package com.example.url_shortener.DTOs;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

@@ -1,4 +1,4 @@
-package com.example.url_shortener;
+package com.example.url_shortener.Services;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -8,6 +8,9 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import com.example.url_shortener.Entities.Url;
+import com.example.url_shortener.Repositories.UrlRepository;
 
 import lombok.RequiredArgsConstructor;
 

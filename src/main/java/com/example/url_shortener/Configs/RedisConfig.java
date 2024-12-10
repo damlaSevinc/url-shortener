@@ -1,4 +1,4 @@
-package com.example.url_shortener;
+package com.example.url_shortener.Configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,10 +1,15 @@
-package com.example.url_shortener;
+package com.example.url_shortener.Controllers;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+
+import com.example.url_shortener.DTOs.UrlRequestDto;
+import com.example.url_shortener.DTOs.UrlResponseDto;
+import com.example.url_shortener.Entities.Url;
+import com.example.url_shortener.Services.UrlService;
 
 import lombok.RequiredArgsConstructor;
 

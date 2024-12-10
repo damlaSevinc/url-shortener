@@ -1,4 +1,4 @@
-package com.example.url_shortener;
+package com.example.url_shortener.Entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

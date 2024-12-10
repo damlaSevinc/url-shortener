@@ -17,6 +17,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 
+import com.example.url_shortener.Entities.Url;
+import com.example.url_shortener.Repositories.UrlRepository;
+import com.example.url_shortener.Services.UrlService;
+
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class UrlServiceTest {
